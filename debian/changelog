@@ -1,0 +1,8 @@
+printer-driver-alc1100 (1.2-1) UNRELEASED; urgency=medium
+
+  * Imported Upstream version 1.2
+  * adding gbp.conf for easier living
+  * add Debianisation
+  * Initial release (Closes: #??????)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 28 Dec 2013 20:58:44 +0100
