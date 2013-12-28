@@ -1,0 +1,41 @@
+printer-driver-alc1100 for Debian
+--------------------------------
+
+##############
+# Historical #
+##############
+The original filter and the ppd file for the Epson Color Laser printer
+C1100 was shipped by Avasys Corporation for Seiko Epson.
+
+  http://avasys.jp/eng/about/profile.php
+
+But Avasys anounced stopping the developing of Linux driver for Seiko
+Epson in December of 2011.
+
+  http://avasys.jp/eng/linux_driver/news/id001138.php
+
+In January 2013 Avasys stopped providing Linux Driver and Seiko Epson is
+providing all driver by themself.
+
+  http://download.ebz.epson.net/dsc/search/01/search/
+
+########
+# Note #
+########
+The printer Epson AcuLaser C1100 is marked EOL (end of live) by Epson so
+unfortunately new driver and filter will never provided by Seiko Epson.
+The existing driver is precompiled, sources of the binary 'alc1100' are
+not public.
+So we have to take the existing file to get the printer working with
+cups, there is no other open source based filter available.
+
+As the binary 'alc1100' is precompiled with 32bit bindings it needs a
+32bit libstdc++5 as well. The installation on platform i386 works fine,
+you can install the package on amd64 as well. But you have to install
+the libstdc++5 from the i386 repository too to get the filter working.
+
+Please visit
+  http://wiki.debian.org/Multiarch/HOWTO
+to find a proper setup.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 26 Dec 2013 12:11:35 +0100

@@ -1,0 +1,20 @@
+Source: printer-driver-alc1100
+Section: text
+Priority: optional
+Maintainer: Carsten Schoenert <c.schoenert@t-online.de>
+Build-Depends: debhelper (>= 9.0.0), libstdc++5
+Standards-Version: 3.9.5
+Homepage: http://download.ebz.epson.net/dsc/search/01/search/searchModule
+#Vcs-Git: git://git.debian.org/collab-maint/printer-driver-alc1100.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/printer-driver-alc1100.git;a=summary
+
+Package: printer-driver-alc1100
+Architecture: i386
+Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++5, bash (>= 4.1)
+Recommends: cups
+Description: printer driver for Epson AcuLaser CL1100
+ This package contains the ppd file and wrapper utilitys from
+ the Seiko Epson Corporation.
+ .
+ Install this package to use the Epson AcuLaser C1100 with the
+ CUPS printing backend.

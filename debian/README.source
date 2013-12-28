@@ -1,0 +1,21 @@
+printer-driver-alc1100 for Debian
+--------------------------------
+
+The source for the CUPS filter and the ppd driver for the Epson AcuLaser
+C1100 are available at the Driver Dowload Site from Seiko Epson:
+
+  http://download.ebz.epson.net/dsc/search/01/search/
+
+To get the current archiv search for the model 'C1100' by placing it into
+the input field, you will be forwarded to a list with suitable archives.
+You have to look for 'AcuLaser C1100 for CUPS' in the list.
+Right now there is no direct browsable website for downloading the
+current archiv available.
+
+Unfortunately Epson is not willing to release any updates for the
+AcuLaser C1100. If you found newer filter or source please let me know.
+
+The filter 'alc1100' is a precompiled 32bit binary, it needs the
+libstdc++5 32bit.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 26 Dec 2013 12:11:35 +0100

@@ -1,0 +1,9 @@
+# [[<package>][ <archlist>][ <type>]:] <tag>[ <extra> ...]
+# alc1100 is precompiled, there are no sources available
+printer-driver-alc1100: binary-file-built-without-LFS-support usr/bin/alc1100
+printer-driver-alc1100: hardening-no-relro usr/bin/alc1100
+printer-driver-alc1100: hardening-no-fortify-functions usr/bin/alc1100
+printer-driver-alc1100: binary-without-manpage usr/bin/alc1100
+# the wrapper script is hardcoded within the ppd file
+printer-driver-alc1100: script-with-language-extension usr/bin/pstoalc1100.sh
+printer-driver-alc1100: binary-without-manpage usr/bin/pstoalc1100.sh
