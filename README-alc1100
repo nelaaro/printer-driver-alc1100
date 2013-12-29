@@ -1,0 +1,299 @@
+
+
+	      Linux Print Filter for the EPSON AL-C1100
+
+
+  Copyright (C) SEIKO EPSON CORPORATION 2004-2006.
+
+
+For the latest information, please refer to:
+
+  http://www.avasys.jp/english/linux_e/
+
+
+---------------------------------------------------------------------
+License Agreement
+---------------------------------------------------------------------
+This package contains files distributed under the terms of the EPSON
+AVASYS Public License.  A verbatim copy of this license can be found
+in the file EAPL.en.txt.
+
+All binary files contained in the sources are Copyright SEIKO EPSON
+Corporation and are distributed under the terms of the EPSON AVASYS
+Public License (see EAPL.en.txt).
+
+---------------------------------------------------------------------
+What is this?
+---------------------------------------------------------------------
+This package provides a print filter for printing to EPSON AL-C1100
+printers on Linux systems.
+
+When using LPRng as the spooler software, this package is sufficient
+to print.  However, if you want to use CUPS, you should also install
+the CUPS related package (available from the same site you got this).
+
+For this package to work correctly, the following has to be installed
+and functional:
+
+  ghostscript
+  psutils
+  glibc
+  sed
+  grep
+  gawk
+  bc
+
+
+---------------------------------------------------------------------
+Installation
+---------------------------------------------------------------------
+The commands below require 'root' permissions and have been verified
+on a Red Hat 9 system with LPRng.  For other Red Hat versions and
+distributions you may have to adjust slightly.
+
+  (1) Installing from RPM
+
+  Simply executing the 'rpm' command below installs the software.
+
+    # rpm -U Epson-ALC1100-filter-1.2-0.i386.rpm
+
+  Modify the package's file name to match what you downloaded.
+
+  (2) Post-installation settings
+
+  Add a printer definition to your /etc/printcap.local.
+  For an AL-C1100 on the USB port (/dev/usb/lp0) by the name of
+  'alc1100', that would look as follows:
+
+    alc1100:\
+                :ml#0:\
+                :mx#0:\
+                :sd=/var/spool/lpd/alc1100:\
+                :if=/usr/bin/alc1100_lprwrapper.sh:\
+                :sh:\
+                :lp=/dev/usb/lp0:
+
+  (3) Restart lpd
+
+  To make these changes take effect you have to restart lpd.  On most
+  distributions you can do that with:
+
+    # /etc/init.d/lpd restart
+
+  This completes the addition of your printer.
+
+  (4) Setting print options with LPRng
+
+  Print options can be set in the /etc/epkowa/alc1100/option.conf
+  file.  This file contains just plain text and can be modified
+  with your favorite text editor (vi, emacs, etc.).  You will
+  need "root" permissions to do so.
+
+  File format:
+  * all lines starting with a # are considered comments and ignored
+  * sections run from one "# *Section" marker to the next
+  * every line contains one setting in a "key=value" format
+  * sections marked with "*Must*" require at least one valid line
+  * sections may be separated by at most one non-comment line
+
+  Note: if otherwise unsupported combinations of settings arise,
+  printing results may not be what you would expect.
+
+  Example: specifying duplex printing
+        # *Section Duplex     : default=None
+        # Duplex=None
+          Duplex=DuplexNoTumble
+        # Duplex=DuplexTumble
+        #
+  Here, the setting "Duplex=DuplexNoTumble" will be used.
+
+  For more information on the keys and values, please refer to the
+  list below.
+
+---------------------------------------------------------------------
+List of Printer Settings
+---------------------------------------------------------------------
+The list below used the following format:
+
+key	    title used by CUPS configuration tool         remarks
+   value    selections shown by CUPS configuration tool   remarks
+
+The default value for a key is indicated with an asterisk (*).
+
+PageSize             Paper Size		Dimensions
+ * a4               A4                 210 x 297 mm
+   a5               A5                 148 x 210 mm
+   b5               B5                 182 x 257 mm
+   lt               Letter             8.5 x 11 in
+   hlt              Half Letter        5.5 x 8.5 in
+   exe              Executive          7.25 x 10.5 in
+   glt              Government Letter  8 x 10.5 in
+   mon              Envelope Monarch   3.875 x 7.5 in
+   env10            Envelope #10       4.125 x 9.5 in
+   envdl            Envelope DL        110 x 220 mm
+   envc5            Envelope C5        162 x 229 mm
+   envc6            Envelope C6        114 x 162 mm
+   ib5              Envelope B5        176 x 250 mm
+
+
+MediaType            Paper Type
+ * normal           Plain paper
+   semithk          Semi Thick
+   lthead           Letterhead
+   recycle          Recycle paper
+   color            Color paper
+   transparency     EPSON OHP Sheet
+   label            Label paper
+   thick            Thick paper
+   extrathk         Extra Thick
+   coated           Coated paper
+   thick-back       Thick Back
+   semithk-back     Semi Thick Back
+   extrathk-back    Extra Thick Back
+   coated-back      Coated Back
+
+
+Color                Color
+ * color            Color
+   black            Grayscale
+
+
+Duplex               Duplex               double sided printing
+ * None             Off(Simplex)          single sided
+   DuplexNoTumble   Long Edge Binding     double sided
+   DuplexTumble     Short Edge Binding    double sided
+
+   Note: duplex printing can only be used with the following paper
+   sized: a4, b5, lt and, exe
+   type: normal, semithk, lthead, recycle, color
+
+
+TonerSave            Toner Save Mode
+ * false            Off
+   true             On
+
+
+Resolution           Resolution
+ * 300dpi           Fast(300 DPI)
+   600dpi           Fine(600 DPI)
+
+
+InputSlot            Paper Source
+ * autoselection    Auto
+   mptray           MP Tray
+   cassette1        Cassette 1
+
+   Note: Option cassette and auto can only be used with the following paper
+   sized: a4, lt
+   type: normal,semithk,lthead,recycle,color
+
+
+Collate              Collate              output ordering
+ * on               On                    sort 1,2,...,1,2,...
+   off              Off                   sort 1,1,...,2,2,...
+
+
+Copies               Number of copies
+ * 1                1
+   2                2
+   3                3
+   :                :
+   100              100
+
+
+---------------------------------------------------------------------
+When used with LPRng, the following are set in the option.conf file:
+
+        *Section PageSize
+                PageSize
+
+        *Section Resolution
+                Resolution      print resolution
+
+        *Section Duplex
+                Duplex          double sided
+
+        *Section Color
+                Color
+
+        *Section MediaType
+                MediaType
+
+        *Section InputSlot
+                InputSlot
+
+        *Section TonerSave
+                TonerSave
+
+
+---------------------------------------------------------------------
+Notes
+---------------------------------------------------------------------
+* When used with CUPS, please refer to the README of the CUPS related
+  package (Epson-ALC1100-filter-cups).
+
+* The filter included can only handle PostScript data.
+
+* We suggest you set print options via the option.conf file.
+  Although you can set them on the lpr command line, setting something
+  like the paper size quickly becomes quite a bore.
+
+  For 600dpi monochrome duplex printing of foo.ps on 'alc1100':
+
+  $ lpr -P alc1100 -ZDuplex=DuplexNoTumble,Resolution=600dpi,Color=black foo.ps
+
+  To print the same file on B5 sized paper:
+
+  $ lpr -P alc1100 -ZPageSize=b5 foo.ps
+
+  See the lpr help (lpr --help) for details of command line options
+  and how they should be specified.
+
+* When printing several copies of a multipage document with lpr or lp,
+  the "Collate" option can be used to toggle the page sorting order.
+
+  - three copies, sort pages in 1,2,...,1,2,...,1,2,... order
+    $ lpr -P alc1100 -K3 foo.ps
+
+  - three copies, sort pages in 1,1,1,2,2,2,... order
+    $ lpr -P alc1100 -ZCopies=3 foo.ps
+
+* After cancelling a print job, the next print job may not give the
+  desired result.
+
+* Please refer to your printer manual for details on the various
+  combinations of settings and their limitations.
+
+* Optional hardware settings can be set even if such hardware is not
+  currently installed.  Naturally, the result will not be what you
+  expected.  Please refrain from using such settings when optional
+  hardware is not installed.
+
+  Furthermore, specifying combinations of settings that are not
+  supported according to your printer's specifications may lead to
+  paper jams and can possibly cause mechanical damage.
+
+* Occasionally, part of your PostScript data may not fit on the paper
+  size you selected or be oriented the same way as the paper in your
+  tray.
+
+---------------------------------------------------------------------
+Change Log
+---------------------------------------------------------------------
+* Ver.1.2
+  - fixed "Image Optimum" warning printer panel display.
+
+* Ver.1.1
+  - fixed 5mm shift to lower right corner
+  - fixed several typos in the PPD file
+
+---------------------------------------------------------------------
+Other sources of information
+---------------------------------------------------------------------
+The latest information about this package is available from:
+
+  http://www.avasys.jp/english/linux_e/
+
+
+                          -- EPSON AVASYS Corporation Linux Driver Team
+                                   <pipsplus-bugs@avasys.jp>

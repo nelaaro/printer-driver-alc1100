@@ -1,0 +1,145 @@
+
+
+	Linux Print Filter for the EPSON AL-C1100 (CUPS only)
+
+
+  Copyright (C) SEIKO EPSON CORPORATION 2004-2006.
+
+
+For the latest information, please refer to:
+
+  http://www.avasys.jp/english/linux_e/
+
+
+---------------------------------------------------------------------
+License Agreement
+---------------------------------------------------------------------
+This package is distributed under the terms of the MIT License.  More
+information regarding this license can be found at:
+
+  http://www.opensource.org/licenses/mit-license.php
+
+---------------------------------------------------------------------
+What is this?
+---------------------------------------------------------------------
+This package includes the PPD file needed by the Linux print filter
+for printing to EPSON AL-C1100 printers on systems that use the Common
+UNIX Printing System (CUPS) as their printing system.
+
+For this package to work correctly, the following has to be installed
+and functional:
+
+  Epson-ALC1100-filter	version 1.2
+  cups			version 1.1.17 or later
+  foomatic		version 3 or later
+
+---------------------------------------------------------------------
+Installation
+---------------------------------------------------------------------
+The commands below require 'root' permissions and have been verified
+on a Fedora Core 2 system.  For other versions and distributions you
+may have to adjust slightly.
+
+  (1) Installing from RPM
+
+  Simply executing the 'rpm' command below installs the software.
+
+    # rpm -U Epson-ALC1100-filter-cups-1.2-0.i386.rpm
+
+  Modify the package's file name to match what you downloaded.
+
+  (2) Restarting CUPS
+
+  To make these changes take effect you have to restart CUPS.  On most
+  distributions you can do that with:
+
+    # /etc/init.d/cups restart
+
+  (3) Adding a printer
+
+  You can add a printer from the command line with 'lpadmin'.  For
+  details on this command, see the lpadmin(8).
+  To add an AL-C1100 printer connected to the first USB port by
+  the name of alc1100, you would use:
+
+    # lpadmin -p alc1100 -E -v usb:/dev/usb/lp0 -m Epson-AL-C1100-fm3.ppd
+
+  You can also add a printer via the CUPS web tool from your browser.
+  This is explained in detail in the CUPS manual.
+  For a CUPS server running on your local PC, you can access this tool
+  at:
+
+    http://localhost:631/
+
+  Once you have access to the web tool, you
+
+    1) select "Manage Printers"
+    2) select "Add Printer"
+       You will be asked for the account and password of the printer
+       administrator.  If you have done nothing special to set these
+       up, you can use "root" for the account and the root password.
+    3) enter a "Name" and select "Continue"
+       The other fields can be defaulted.
+    4) select the connected printer "Device" and "Continue"
+    5) enter "Epson" for the "Make" and "Continue"
+    6) select the printer "Model" you have and "Continue"
+       For example, for an AL-C1100 you would select "EPSON AL-C1100,
+       ESC/PageS Filter (en)".
+
+  This completes the addition of your printer.
+
+For information about how to print or set print options, please refer
+to the CUPS documentation.  Alternatively, you can refer to the README
+included with the Epson-ALC1100-filter package.
+
+---------------------------------------------------------------------
+Notes
+---------------------------------------------------------------------
+* When printing several copies of a multipage document with lpr or lp,
+  the "Collate" option can be used to toggle the page sorting order.
+
+  - three copies, sort pages in 1,2,...,1,2,...,1,2,... order
+    $ lpr -P alc1100 -o Copies=3 -o Collate=on file.ps
+
+  - three copies, sort pages in 1,1,1,2,2,2,... order
+    $ lpr -P alc1100 -o Copies=3 -o Collate=off file.ps
+
+* Using "Collate=on" in combination with double sided and/or n-up
+  printing may not give the expected result.
+
+* After cancelling a print job, the next print job may not give the
+  desired result.
+
+* Please refer to your printer manual for details on the various
+  combinations of settings and their limitations.
+
+* Optional hardware settings can be set even if such hardware is not
+  currently installed.  Naturally, the result will not be what you
+  expected.  Please refrain from using such settings when optional
+  hardware is not installed.
+
+  Furthermore, specifying combinations of settings that are not
+  supported according to your printer's specifications may lead to
+  paper jams and can possibly cause mechanical damage.
+
+---------------------------------------------------------------------
+Change Log
+---------------------------------------------------------------------
+* Ver.1.1
+  - fixed 5mm shift to lower right corner
+  - fixed several typos in the PPD file
+
+---------------------------------------------------------------------
+Other sources of information
+---------------------------------------------------------------------
+Detailed information about CUPS is available at:
+
+  http://www.cups.org/
+
+The latest information about this package is available from:
+
+  http://www.avasys.jp/english/linux_e/
+
+
+                          -- EPSON AVASYS Corporation Linux Driver Team
+                                   <pipsplus-bugs@avasys.jp>
